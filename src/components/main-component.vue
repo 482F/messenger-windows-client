@@ -16,8 +16,8 @@
 import EwResizableLayout from './ew-resizable-layout.vue'
 import SideBar from './side-bar.vue'
 import MainContent from './main-content.vue'
-
 import { getConfig } from '../utils/config'
+
 const config = await getConfig()
 
 defineProps<{ titles: { left: string; right: string } }>()
