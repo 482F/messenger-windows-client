@@ -1,30 +1,41 @@
 <template>
-  <div>
-    <suspense>
-      <sub-component
-        v-model:msg="msg"
-        :titles="props.titles"
-        @update:titles="$emit('update:titles', $event)"
-      />
-    </suspense>
-    <suspense>
-      <sub-component
-        v-model:msg="msg"
-        :titles="props.titles"
-        @update:titles="$emit('update:titles', $event)"
-      />
-    </suspense>
-  </div>
+  <ew-resizable-layout
+    class="main-conponent"
+    v-model:left-width="config.leftWidth"
+  >
+    <template v-slot:left>
+      <side-bar class="side-bar" />
+    </template>
+    <template v-slot:right>
+      <main-content class="main-content" />
+    </template>
+  </ew-resizable-layout>
 </template>
 
 <script setup lang="ts">
-import SubComponent from './sub-component.vue'
+import EwResizableLayout from './ew-resizable-layout.vue'
+import SideBar from './side-bar.vue'
+import MainContent from './main-content.vue'
 
-import { ref } from 'vue'
-const msg = ref('initial msg')
+import { getConfig } from '../utils/config'
+const config = await getConfig()
 
-const props = defineProps<{ titles: { left: string; right: string } }>()
+defineProps<{ titles: { left: string; right: string } }>()
 defineEmits<{
   (e: 'update:titles', newTitles: { left: string; right: string }): void
 }>()
 </script>
+
+<style lang="scss" scoped>
+.main-component {
+  user-select: none;
+  height: 100%;
+  .side-bar,
+  .main-content {
+    height: 100%;
+  }
+  .side-bar {
+    overflow-y: scroll;
+  }
+}
+</style>
