@@ -1,22 +1,25 @@
 import { getDb, EDatabase } from '../utils/sql'
+import { ulid } from 'ulidx'
 
 const initializeQueries = [
   // query は JSON 形式だが、tauri-plugin-sql が JSON をサポートしていないためこちらでパースする
   `CREATE TABLE IF NOT EXISTS queries (
     id          INTEGER  UNIQUE NOT NULL PRIMARY KEY  ,
     query       TEXT            NOT NULL              ,
-    time        DATETIME        NOT NULL
+    time        DATETIME        NOT NULL              ,
+    UNIQUE(query, time)
   );`,
   `CREATE TABLE IF NOT EXISTS users (
     id          INTEGER  UNIQUE NOT NULL PRIMARY KEY  ,
     name        TEXT     UNIQUE NOT NULL
   );`,
   `CREATE TABLE IF NOT EXISTS messages (
-    id          INTEGER  UNIQUE NOT NULL PRIMARY KEY  ,
+    id          TEXT     UNIQUE NOT NULL PRIMARY KEY  ,
     body        TEXT                                  ,
     user_id     INTEGER         NOT NULL              ,
     time        DATETIME        NOT NULL              ,
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    FOREIGN KEY(user_id) REFERENCES users(id)         ,
+    UNIQUE(body, time, user_id)
   );`,
 ]
 
@@ -32,7 +35,7 @@ export class MessengerDb {
   }
   async getAllMessages() {
     return this.db.select<{
-      id: number
+      id: string
       body: string
       userId: number
       time: string
@@ -46,16 +49,17 @@ export class MessengerDb {
   }
   async createMessage(userId: number, body: string) {
     const now = new Date()
-    const { lastInsertId: postId } = await this.db.execute(
-      `INSERT INTO messages (body, user_id, time) VALUES (?, ?, ?);`,
-      [body, userId, now]
+    const messageId: string = ulid()
+    await this.db.execute(
+      `INSERT INTO messages (id, body, user_id, time) VALUES (?, ?, ?, ?);`,
+      [messageId, body, userId, now]
     )
     await this.db.execute(`INSERT INTO queries (query, time) VALUES (?, ?);`, [
       JSON.stringify({
         userId,
         type: 'post.create',
         payload: {
-          postId,
+          messageId,
           body,
           // parentPostIds,
           // childPostIds,
