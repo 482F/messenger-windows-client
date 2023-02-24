@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "tauri-vue3-template",
+    "productName": "messenger",
     "version": "0.1.0"
   },
   "tauri": {
@@ -43,7 +43,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "net.482f.tauri.tauri-vue3-template",
+      "identifier": "net.482f.tauri.messenger",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -73,7 +73,7 @@
         "height": 600,
         "width": 800,
         "resizable": true,
-        "title": "tauri-vue3-template",
+        "title": "messenger",
         "decorations": false
       }
     ]
