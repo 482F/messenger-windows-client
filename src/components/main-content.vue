@@ -22,10 +22,6 @@
 TODO:
 - user 登録の実装
   - 公開鍵、秘密鍵を作成して複合鍵暗号通信の実装
-- INSERT 等はクラスのメソッドに隠す
-- 投稿の id は uuid v4 にする
-- db に同時刻同メッセージの投稿を許容しないようにする
-  - 同一 PC で動いている時に同じ内容が書き込まれてしまうため
 - 同期処理の実装
 */
 import ATextField from './atoms/a-text-field.vue'
