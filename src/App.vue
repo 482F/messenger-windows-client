@@ -28,7 +28,7 @@ import { currentWindow, Valueof } from './utils/common'
 import { getConfig, RefConfig } from './utils/config'
 
 const titles = ref({
-  left: 'tauri-vue3-template',
+  left: 'messenger',
   right: '',
 })
 
