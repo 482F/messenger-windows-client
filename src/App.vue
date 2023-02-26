@@ -12,11 +12,13 @@
       :right-title="titles.right"
     />
     <suspense>
-      <component
-        :is="currentComponent"
-        class="main-component"
-        v-model:titles="titles"
-      />
+      <div style="display: contents" v-if="currentComponent">
+        <component
+          :is="{ ...currentComponent }"
+          class="main-component"
+          v-model:titles="titles"
+        />
+      </div>
     </suspense>
   </v-app>
 </template>

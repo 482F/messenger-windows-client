@@ -19,6 +19,7 @@ export type ColorConfig = {
   value: string
 }
 const defaultConfig = {
+  leftWidth: 300,
   string: 'default value1',
   number: 42,
   boolean: false,
