@@ -105,7 +105,7 @@ export type JsonKey = string | number
 export type JsonPrimitive = string | number | boolean | null
 export function isJsonPrimitive(val: unknown): val is JsonPrimitive {
   return (
-    !(val as boolean) || ['string', 'number', 'boolean'].includes(typeof val)
+    val === null || ['string', 'number', 'boolean'].includes(typeof val)
   )
 }
 export type JsonArray = Json[]
@@ -209,3 +209,24 @@ declare global {
 
 Object.map = _Object.map
 Object.asyncMap = _Object.asyncMap
+
+export type Host = {
+  serverName: string
+  serverUrl: string
+  serverPassword: string
+  userId: string
+  userName: string
+  userPassword: string
+  autoLogin: boolean
+}
+
+export async function makeSha256(plain: string) {
+  const salt = '5E43f'
+  return await crypto.subtle
+    .digest('SHA-256', new TextEncoder().encode(plain + salt))
+    .then((r) =>
+      Array.from(new Uint8Array(r))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('')
+    )
+}

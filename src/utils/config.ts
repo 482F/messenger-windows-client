@@ -8,6 +8,7 @@ import {
   isJsonPrimitive,
   Key,
   isTauriEvent,
+  Host,
 } from './common'
 import throttle from 'lodash/throttle'
 import { emit } from '@tauri-apps/api/event'
@@ -20,13 +21,19 @@ export type ColorConfig = {
 }
 const defaultConfig = {
   leftWidth: 300,
-  string: 'default value1',
-  number: 42,
-  boolean: false,
+  currentHost: {
+    serverUrl: '',
+    serverName: '',
+    serverPassword: '',
+    userId: '',
+    userName: '',
+    userPassword: '',
+    autoLogin: true,
+  } satisfies Host as Host,
   colors: {
-    titlebar: { label: 'タイトルバー', value: 'lightgray' },
-    color1: { label: '色1', value: 'lightblue' },
-    color2: { label: '色2', value: '#333000' },
+    'titlebar': { label: 'タイトルバー', value: 'lightgray' },
+    'background': { label: '背景', value: 'white' },
+    'accent-color': { label: 'アクセントカラー', value: 'lightblue' },
   } satisfies { [x: string]: ColorConfig },
 }
 
@@ -125,7 +132,6 @@ async function getInitialConfig(db: EDatabase): Promise<Config> {
     await db
       .select<{ key: string; value: string }>(`SELECT * FROM configs`)
       .then((rawRecords) => {
-        console.log({ rawRecords })
         const records: [string, string][] = rawRecords.map((rawRecord) => [
           rawRecord.key,
           rawRecord.value,
@@ -195,7 +201,11 @@ const proxyHandler = {
         ]} である必要があります`
       )
 
-    obj[anyProp] = value as any
+    if (isJsonPrimitive(obj[anyProp])) {
+      obj[anyProp] = value as any
+    } else {
+      Object.assign(obj[anyProp] ?? {}, value as any)
+    }
 
     if (!refConfig || refConfig[emittedSymbol]) {
       return true

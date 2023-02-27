@@ -47,6 +47,7 @@ const configColorStyles = computed(() => {
     ])
   )
 })
+
 let currentComponent: Ref<undefined | ReturnType<typeof defineComponent>> =
   ref(undefined)
 currentWindow.getComponent().then((component) => {
@@ -96,6 +97,7 @@ body {
     width: 0;
   }
   #app {
+    accent-color: var(--accent-color);
     margin: 0;
     padding: 0;
     height: 100vh;
