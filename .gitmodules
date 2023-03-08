@@ -1,0 +1,3 @@
+[submodule "src/lib/@482F-utils/vue3"]
+	path = src/lib/@482F-utils/vue3
+	url = git@github.com:482F/482F-vue3-utils.git

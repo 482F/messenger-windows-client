@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import ATextField from './atoms/a-text-field.vue'
+import ATextField from '~/lib/@482F-utils/vue3/src/atoms/a-text-field.vue'
 import { Messenger } from '../classes/messenger'
 import { ref } from 'vue'
 
@@ -38,19 +38,7 @@ async function addText(sender: string, body: string) {
   text.value += '\n' + userName + ': ' + body
 
   props.messenger.createMessage(body)
-  // await db.execute(`INSERT OR IGNORE INTO users (name) VALUES (?);`, [userName])
-  // const userId: string =
-  //   (await db
-  //     .select<{ id: string }>(`SELECT id FROM users WHERE name = ?;`, [
-  //       userName,
-  //     ])
-  //     .then((r) => r[0]?.id)) ?? ''
 }
-// connection.value.onmessage = function (event) {
-//   console.log({ event })
-//   const data = JSON.parse(event.data)
-//   addText(data.sender, data.message)
-// }
 </script>
 
 <style lang="scss" scoped></style>
