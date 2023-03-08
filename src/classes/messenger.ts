@@ -45,6 +45,9 @@ export class Messenger {
     this.db = db
     this.host = host
     this.ws = ws
+    if (ws) {
+      ws.onmessage = this.onMessage
+    }
   }
   static async login(host: Host) {
     if (!host.serverName) {
@@ -168,7 +171,23 @@ export class Messenger {
   async createMessage(body: string) {
     const now = new Date()
     const messageId: string = ulid()
-    this.ws?.send(body)
+    const query = JSON.stringify({
+      userId: this.host.userId,
+      type: 'post.create',
+      payload: {
+        messageId,
+        body,
+        // parentPostIds,
+        // childPostIds,
+        // tagIds,
+      },
+    })
+    this.ws?.send(
+      JSON.stringify({
+        query,
+        now,
+      })
+    )
     await this.db.execute(
       `INSERT INTO
         ${this.getTableName('messages')}
@@ -179,20 +198,22 @@ export class Messenger {
       `INSERT INTO
         ${this.getTableName('queries')}
         (query, time) VALUES (?, ?);`,
-      [
-        JSON.stringify({
-          userId: this.host.userId,
-          type: 'post.create',
-          payload: {
-            messageId,
-            body,
-            // parentPostIds,
-            // childPostIds,
-            // tagIds,
-          },
-        }),
-        now,
-      ]
+      [query, now]
     )
+  }
+  onMessage(message: MessageEvent<any>) {
+    const data = (() => {
+      try {
+        const json = JSON.parse(message.data)
+        const { now, query: rawQuery } = JSON.parse(json.message)
+        const query = JSON.parse(rawQuery)
+        return {
+          sender: json.sender,
+          now,
+          query,
+        }
+      } catch {}
+    })()
+    console.log({ data })
   }
 }
