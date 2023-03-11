@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import ATextField from '../atoms/a-text-field.vue'
+import ATextField from '~/lib/@482F-utils/vue3/src/atoms/a-text-field.vue'
 import { ref, Ref, computed } from 'vue'
 
 const props = defineProps<{ modelValue: string; label: string }>()

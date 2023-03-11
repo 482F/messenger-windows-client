@@ -10,6 +10,11 @@ export default defineConfig({
   server: {
     strictPort: true,
   },
+  resolve: {
+    alias: {
+      '~/': `${__dirname}/src/`,
+    },
+  },
   // to make use of `TAURI_PLATFORM`, `TAURI_ARCH`, `TAURI_FAMILY`,
   // `TAURI_PLATFORM_VERSION`, `TAURI_PLATFORM_TYPE` and `TAURI_DEBUG`
   // env variables
