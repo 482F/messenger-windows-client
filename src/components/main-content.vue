@@ -15,6 +15,10 @@
 <script setup lang="ts">
 /*
 TODO:
+- sql でスキーマ的な感じで、db に環境名を与えておくとそれをテーブルのプレフィックスにする、みたいなことをしたい
+  - テーブル作成
+  - 新しいテーブル作成、新しいカラム作成、FK 制約の追加くらいは後からできるようにしたい
+- join
 - ローカルのすべての操作もいったんクエリにして、それから解釈する
 - 同期処理の実装
   - 同期以前に、全ての処理について一旦クエリを作り、applyQuery とかで具体的な db 操作などに変換する
@@ -44,7 +48,7 @@ import { getConfig } from '../utils/config'
 import { ref, Ref } from 'vue'
 
 const config = await getConfig()
-config.value.currentHost = await Messenger.getCurrentHost()
+// config.value.currentHost = await Messenger.getCurrentHost()
 
 const messenger: Ref<Messenger | undefined> = ref(undefined)
 const loading = ref(false)

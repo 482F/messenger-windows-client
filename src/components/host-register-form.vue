@@ -29,9 +29,9 @@
 </template>
 
 <script setup lang="ts">
-import ATextField from '~/lib/@482F-utils/vue3/src/atoms/a-text-field.vue'
-import ACheckbox from '~/lib/@482F-utils/vue3/src/atoms/a-checkbox.vue'
-import AButton from '~/lib/@482F-utils/vue3/src/atoms/a-button.vue'
+import ATextField from '@482F-utils/vue3/src/atoms/a-text-field.vue'
+import ACheckbox from '@482F-utils/vue3/src/atoms/a-checkbox.vue'
+import AButton from '@482F-utils/vue3/src/atoms/a-button.vue'
 import { Host } from '../utils/common'
 import { ref, Ref, computed } from 'vue'
 import { getConfig } from '../utils/config'

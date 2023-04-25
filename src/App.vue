@@ -26,7 +26,8 @@
 <script setup lang="ts">
 import { ref, Ref, computed, defineComponent } from 'vue'
 import Titlebar from './components/titlebar.vue'
-import { currentWindow, Valueof } from './utils/common'
+import { currentWindow } from './utils/common'
+import { Valueof } from '@482F-utils/ts/src/common'
 import { getConfig, RefConfig } from './utils/config'
 
 const titles = ref({

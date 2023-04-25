@@ -9,6 +9,13 @@ export default defineConfig({
   // Tauri expects a fixed port, fail if that port is not available
   server: {
     strictPort: true,
+    watch: {
+      ignored: ['!**/node_modules/@482F-utils/**'],
+      // usePolling: true,
+    },
+  },
+  optimizeDeps: {
+    exclude: ['@482F-utils/vue3', '@482F-utils/ts'],
   },
   resolve: {
     alias: {

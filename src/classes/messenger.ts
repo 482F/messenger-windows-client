@@ -126,6 +126,10 @@ export class Messenger {
   }
   static async getCurrentHost() {
     const config = await getConfig()
+    console.log({
+      config,
+      db: await db.select<Host>(`SELECT * FROM hosts;`).then((r) => r[0]),
+    })
     if (config.value.currentHost.serverName) {
       return config.value.currentHost
     } else {

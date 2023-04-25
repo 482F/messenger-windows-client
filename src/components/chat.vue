@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import ATextField from '~/lib/@482F-utils/vue3/src/atoms/a-text-field.vue'
+import ATextField from '@482F-utils/vue3/src/atoms/a-text-field.vue'
 import { Messenger } from '../classes/messenger'
 import { ref } from 'vue'
 
